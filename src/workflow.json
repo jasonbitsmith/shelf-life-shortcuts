@@ -1,0 +1,1309 @@
+{
+  "WFWorkflowMinimumClientVersionString": "900",
+  "WFWorkflowMinimumClientVersion": 900,
+  "WFWorkflowIcon": {
+    "WFWorkflowIconStartColor": 431817727,
+    "WFWorkflowIconGlyphNumber": 61440
+  },
+  "WFWorkflowClientVersion": "5111.0.1",
+  "WFWorkflowOutputContentItemClasses": [],
+  "WFWorkflowHasOutputFallback": false,
+  "WFWorkflowActions": [
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.comment",
+      "WFWorkflowActionParameters": {
+        "WFCommentActionText": "保质期管家｜开源试用版 0.1.0\n扫码查询将条码发送至 Open Food Facts；照片由系统识别。请核对包装日期。\n安装后请编辑两处“添加提醒事项”，选择自己的“保质期管理”列表。\nhttps://github.com/jasonbitsmith/shelf-life-shortcuts",
+        "UUID": "E3B51C33-98F8-4F4F-8DE5-480F2ED32CF6"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "WFTextActionText": "未扫描",
+        "UUID": "228B1258-D36C-41DE-AEE1-A8775243BA69"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "228B1258-D36C-41DE-AEE1-A8775243BA69",
+            "Type": "ActionOutput",
+            "OutputName": "Text"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "商品条码",
+        "UUID": "4EBEEE3D-EC06-430D-B8AD-89C753A9E015"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "WFTextActionText": "",
+        "UUID": "CC619A3F-12E1-4BC7-9717-B4065E933536"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "CC619A3F-12E1-4BC7-9717-B4065E933536",
+            "Type": "ActionOutput",
+            "OutputName": "Text"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "候选名称",
+        "UUID": "354D99D9-1AA8-48A5-AD06-4B5B83668E56"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefrommenu",
+      "WFWorkflowActionParameters": {
+        "WFMenuPrompt": "选择录入方式；无网络时请直接拍照",
+        "WFControlFlowMode": 0,
+        "UUID": "32FC7416-1EDC-44AA-90C0-A68A5268F9B1",
+        "WFMenuItems": [
+          "扫码查询商品",
+          "直接拍照（跳过联网查询）"
+        ],
+        "GroupingIdentifier": "3553F4BE-10CC-4693-A0FF-CFF253F816FA"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefrommenu",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 1,
+        "UUID": "5B3FD483-F64E-4487-854B-CC9B9DA37FBD",
+        "GroupingIdentifier": "3553F4BE-10CC-4693-A0FF-CFF253F816FA",
+        "WFMenuItemTitle": "扫码查询商品"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.scanbarcode",
+      "WFWorkflowActionParameters": {
+        "UUID": "85D9322D-9A7E-4F32-BD97-1C2F10967EB4"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "85D9322D-9A7E-4F32-BD97-1C2F10967EB4",
+            "Type": "ActionOutput",
+            "OutputName": "QR/Barcode"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "商品条码",
+        "UUID": "99B96731-76A0-4E00-927C-24BBFAAA2107"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.url",
+      "WFWorkflowActionParameters": {
+        "WFURLActionURL": {
+          "Value": {
+            "string": "https://world.openfoodfacts.org/api/v2/product/￼.json?fields=product_name,product_name_zh,brands,quantity",
+            "attachmentsByRange": {
+              "{47, 1}": {
+                "OutputUUID": "85D9322D-9A7E-4F32-BD97-1C2F10967EB4",
+                "Type": "ActionOutput",
+                "OutputName": "QR/Barcode"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "UUID": "590A5896-2D32-4BBD-99F2-BC65DFC8D212"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.downloadurl",
+      "WFWorkflowActionParameters": {
+        "WFHTTPHeaders": {
+          "Value": {
+            "WFDictionaryFieldValueItems": [
+              {
+                "WFKey": {
+                  "Value": {
+                    "string": "User-Agent"
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                },
+                "WFItemType": 0,
+                "WFValue": {
+                  "Value": {
+                    "string": "HomeExpiry/1.0 (personal Apple Shortcuts)"
+                  },
+                  "WFSerializationType": "WFTextTokenString"
+                }
+              }
+            ]
+          },
+          "WFSerializationType": "WFDictionaryFieldValue"
+        },
+        "ShowHeaders": true,
+        "UUID": "1F5A139C-7160-4B90-8480-6941BD75D716",
+        "WFURL": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "590A5896-2D32-4BBD-99F2-BC65DFC8D212",
+                "Type": "ActionOutput",
+                "OutputName": "Result"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "WFHTTPMethod": "GET"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "1F5A139C-7160-4B90-8480-6941BD75D716",
+            "Type": "ActionOutput",
+            "OutputName": "Contents of URL"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "UUID": "7F7ACE77-94E5-4CBB-A49C-CB826A0C2CB2",
+        "WFGetDictionaryValueType": "Value",
+        "WFDictionaryKey": "product"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "7273E51B-F1CA-4767-B3D3-933FD9588C25",
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "Value": {
+              "OutputUUID": "7F7ACE77-94E5-4CBB-A49C-CB826A0C2CB2",
+              "Type": "ActionOutput",
+              "OutputName": "Dictionary Value"
+            },
+            "WFSerializationType": "WFTextTokenAttachment"
+          }
+        },
+        "WFControlFlowMode": 0,
+        "UUID": "D91313AD-6001-4A52-855C-38EFC3D2AD50",
+        "WFCondition": 100
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "1F5A139C-7160-4B90-8480-6941BD75D716",
+            "Type": "ActionOutput",
+            "OutputName": "Contents of URL"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "UUID": "AF2CFE51-87DA-4832-B499-D1041EDE5267",
+        "WFGetDictionaryValueType": "Value",
+        "WFDictionaryKey": "product"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "AF2CFE51-87DA-4832-B499-D1041EDE5267",
+            "Type": "ActionOutput",
+            "OutputName": "Dictionary Value"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "UUID": "562A6933-64B7-4170-AA5D-7364D6D94F58",
+        "WFGetDictionaryValueType": "Value",
+        "WFDictionaryKey": "product_name_zh"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "Value": {
+              "OutputUUID": "562A6933-64B7-4170-AA5D-7364D6D94F58",
+              "Type": "ActionOutput",
+              "OutputName": "Dictionary Value"
+            },
+            "WFSerializationType": "WFTextTokenAttachment"
+          }
+        },
+        "WFControlFlowMode": 0,
+        "UUID": "80383AC2-32F1-4F7E-9018-FE9508FBF2F7",
+        "GroupingIdentifier": "D5915725-896B-4BAE-8714-CBF06B87B9A2",
+        "WFCondition": 100
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "562A6933-64B7-4170-AA5D-7364D6D94F58",
+            "Type": "ActionOutput",
+            "OutputName": "Dictionary Value"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "候选名称",
+        "UUID": "5013E559-F94C-469F-888E-7AE666324715"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 1,
+        "GroupingIdentifier": "D5915725-896B-4BAE-8714-CBF06B87B9A2",
+        "UUID": "D012FA72-717A-4CFF-AAB4-7A1BA1F595BD"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.getvalueforkey",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "AF2CFE51-87DA-4832-B499-D1041EDE5267",
+            "Type": "ActionOutput",
+            "OutputName": "Dictionary Value"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "UUID": "58D9DF95-0EBD-45A8-9287-589DBE5FD7AF",
+        "WFGetDictionaryValueType": "Value",
+        "WFDictionaryKey": "product_name"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "58D9DF95-0EBD-45A8-9287-589DBE5FD7AF",
+            "Type": "ActionOutput",
+            "OutputName": "Dictionary Value"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "候选名称",
+        "UUID": "D2B2D6DD-6D8F-4C4E-B859-2EE5C1045DA7"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 2,
+        "GroupingIdentifier": "D5915725-896B-4BAE-8714-CBF06B87B9A2",
+        "UUID": "D71AD474-A007-46B9-A87F-AD2DE90F9F51"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 2,
+        "GroupingIdentifier": "7273E51B-F1CA-4767-B3D3-933FD9588C25",
+        "UUID": "27825768-1159-433B-B383-E70668CFAA13"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefrommenu",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 1,
+        "UUID": "280A8AAC-250A-4F20-994D-33DA167185D7",
+        "GroupingIdentifier": "3553F4BE-10CC-4693-A0FF-CFF253F816FA",
+        "WFMenuItemTitle": "直接拍照（跳过联网查询）"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.nothing",
+      "WFWorkflowActionParameters": {
+        "UUID": "92BC9D2E-5DDC-4559-9DCF-9D99685DE11D"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefrommenu",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 2,
+        "GroupingIdentifier": "3553F4BE-10CC-4693-A0FF-CFF253F816FA",
+        "UUID": "3D3B6214-539C-440E-B029-E4420BB1E427"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.ask",
+      "WFWorkflowActionParameters": {
+        "WFAskActionDefaultAnswer": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "VariableName": "候选名称",
+                "Type": "Variable"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "UUID": "D96E8D05-4DE0-4663-9B6D-1AFDB8F57CB4",
+        "WFInputType": "Text",
+        "WFAskActionPrompt": "确认商品名称；查询不到时请填写"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "D96E8D05-4DE0-4663-9B6D-1AFDB8F57CB4",
+            "Type": "ActionOutput",
+            "OutputName": "Provided Input"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "商品名称",
+        "UUID": "2ED6BBC8-323B-47A8-8ABE-68A5353F8308"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "Value": {
+              "OutputUUID": "D96E8D05-4DE0-4663-9B6D-1AFDB8F57CB4",
+              "Type": "ActionOutput",
+              "OutputName": "Provided Input"
+            },
+            "WFSerializationType": "WFTextTokenAttachment"
+          }
+        },
+        "WFControlFlowMode": 0,
+        "UUID": "618EA824-66D9-4137-87CE-917A4A649532",
+        "GroupingIdentifier": "F9228F59-FAE1-453E-8987-0E2A011CA7CC",
+        "WFCondition": 100
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "UUID": "078BE63F-EE58-4AA6-AA00-43A14882F93A",
+        "GroupingIdentifier": "F9228F59-FAE1-453E-8987-0E2A011CA7CC",
+        "WFControlFlowMode": 1
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.alert",
+      "WFWorkflowActionParameters": {
+        "WFAlertActionCancelButtonShown": false,
+        "WFAlertActionTitle": "未填写商品名称",
+        "WFAlertActionMessage": "请重新运行并填写商品名称。",
+        "UUID": "483BA7C0-F429-4CF1-9073-7C2AE8578F7F"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.exit",
+      "WFWorkflowActionParameters": {
+        "UUID": "4D1E98F8-8039-41C7-8F88-EE32C6D4744F"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 2,
+        "GroupingIdentifier": "F9228F59-FAE1-453E-8987-0E2A011CA7CC",
+        "UUID": "CD96ECE1-9077-48CF-8756-90F6A9C3CD95"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.takephoto",
+      "WFWorkflowActionParameters": {
+        "WFPhotoCount": 1,
+        "UUID": "E0CEEB19-8218-48EF-B4C9-1CB9AEA44FF2",
+        "WFCameraCaptureShowPreview": true,
+        "WFCameraCaptureDevice": "Back"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.extracttextfromimage",
+      "WFWorkflowActionParameters": {
+        "WFImage": {
+          "Value": {
+            "OutputUUID": "E0CEEB19-8218-48EF-B4C9-1CB9AEA44FF2",
+            "Type": "ActionOutput",
+            "OutputName": "Photo"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "UUID": "8A21250C-B374-440B-868B-256E5520695E"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "8A21250C-B374-440B-868B-256E5520695E",
+            "Type": "ActionOutput",
+            "OutputName": "Text from Image"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "包装文字",
+        "UUID": "F7C77BF1-B76F-4F19-BEE0-2311AE4A781E"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.text.replace",
+      "WFWorkflowActionParameters": {
+        "WFReplaceTextRegularExpression": true,
+        "WFReplaceTextReplace": "$1-$2-$3",
+        "WFReplaceTextCaseSensitive": false,
+        "UUID": "40A25C7F-2A8A-46D9-AA93-55609B5FEE5F",
+        "WFInput": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "8A21250C-B374-440B-868B-256E5520695E",
+                "Type": "ActionOutput",
+                "OutputName": "Text from Image"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "WFReplaceTextFind": "(?<!\\d)((?:19|20)\\d{2})(\\d{2})(\\d{2})(?!\\d)"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.detect.date",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "40A25C7F-2A8A-46D9-AA93-55609B5FEE5F",
+            "Type": "ActionOutput",
+            "OutputName": "Result"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "UUID": "AB40C811-9E3B-4014-A460-92E12A296168"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "Value": {
+              "OutputUUID": "AB40C811-9E3B-4014-A460-92E12A296168",
+              "Type": "ActionOutput",
+              "OutputName": "Dates"
+            },
+            "WFSerializationType": "WFTextTokenAttachment"
+          }
+        },
+        "WFControlFlowMode": 0,
+        "UUID": "226C3AEB-9196-444F-8EB8-7B9C9CC91E63",
+        "GroupingIdentifier": "45E3CF29-7B92-44C1-836A-190B54DE6094",
+        "WFCondition": 100
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefromlist",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "AB40C811-9E3B-4014-A460-92E12A296168",
+            "Type": "ActionOutput",
+            "OutputName": "Dates"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "UUID": "93705CF3-143E-4898-8130-016A9574C026",
+        "WFChooseFromListSelectMultiple": false,
+        "WFChooseFromListPrompt": "请选择包装上的生产日期或到期日期"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.ask",
+      "WFWorkflowActionParameters": {
+        "WFAskActionPrompt": "核对包装日期（下一步选择生产日期或到期日）",
+        "UUID": "946C10D8-26C9-479C-8E78-0AB311FAF4F4",
+        "WFInputType": "Date",
+        "WFAskActionDefaultAnswerDate": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "93705CF3-143E-4898-8130-016A9574C026",
+                "Type": "ActionOutput",
+                "OutputName": "Chosen Item"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "946C10D8-26C9-479C-8E78-0AB311FAF4F4",
+            "Type": "ActionOutput",
+            "OutputName": "Provided Input"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "包装日期",
+        "UUID": "747B4FF1-51DC-4A81-A0C8-DF2C1817C26A"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 1,
+        "GroupingIdentifier": "45E3CF29-7B92-44C1-836A-190B54DE6094",
+        "UUID": "EBD369AE-FF66-47B3-963C-CDA8BF2347EC"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.ask",
+      "WFWorkflowActionParameters": {
+        "WFInputType": "Date",
+        "UUID": "E5559E77-F510-4D62-B81E-765D01FF94C9",
+        "WFAskActionPrompt": "未识别到日期，请选择包装上的生产日期或到期日期"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "E5559E77-F510-4D62-B81E-765D01FF94C9",
+            "Type": "ActionOutput",
+            "OutputName": "Provided Input"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "包装日期",
+        "UUID": "D3F809DA-65A4-43B7-AC0F-B176E0C56939"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "UUID": "03436FBF-A751-4ABF-806E-850995C57510",
+        "GroupingIdentifier": "45E3CF29-7B92-44C1-836A-190B54DE6094",
+        "WFControlFlowMode": 2
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefrommenu",
+      "WFWorkflowActionParameters": {
+        "WFMenuPrompt": "包装日期代表什么？",
+        "WFControlFlowMode": 0,
+        "UUID": "E9A97567-1387-48D4-957E-A43462666144",
+        "WFMenuItems": [
+          "包装日期就是到期日",
+          "生产日期＋保质期月数",
+          "生产日期＋保质期天数"
+        ],
+        "GroupingIdentifier": "A73B4BC6-AE55-4EC6-A9F3-F767D366DCE0"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefrommenu",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 1,
+        "UUID": "83D3A326-1B1C-404B-AE3A-47B4AFA8DD1C",
+        "GroupingIdentifier": "A73B4BC6-AE55-4EC6-A9F3-F767D366DCE0",
+        "WFMenuItemTitle": "包装日期就是到期日"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "VariableName": "包装日期",
+            "Type": "Variable"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "初算到期日",
+        "UUID": "10B43793-759B-4BFC-8F0D-3F880AEDA437"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefrommenu",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 1,
+        "UUID": "450E12C6-BB0D-4FD9-9C5D-701D14399A38",
+        "GroupingIdentifier": "A73B4BC6-AE55-4EC6-A9F3-F767D366DCE0",
+        "WFMenuItemTitle": "生产日期＋保质期月数"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.ask",
+      "WFWorkflowActionParameters": {
+        "WFAskActionDefaultAnswerNumber": 12,
+        "WFAskActionAllowsNegativeNumbers": false,
+        "UUID": "2FA30A09-6096-40A5-9084-07F03F458B5E",
+        "WFInputType": "Number",
+        "WFAskActionAllowsDecimalNumbers": false,
+        "WFAskActionPrompt": "包装标注的保质期是多少个月？"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.adjustdate",
+      "WFWorkflowActionParameters": {
+        "WFDuration": {
+          "Value": {
+            "Unit": "months",
+            "Magnitude": {
+              "Value": {
+                "string": "￼",
+                "attachmentsByRange": {
+                  "{0, 1}": {
+                    "OutputUUID": "2FA30A09-6096-40A5-9084-07F03F458B5E",
+                    "Type": "ActionOutput",
+                    "OutputName": "Provided Input"
+                  }
+                }
+              },
+              "WFSerializationType": "WFTextTokenString"
+            }
+          },
+          "WFSerializationType": "WFQuantityFieldValue"
+        },
+        "WFAdjustOffsetPicker": {
+          "Value": {
+            "Unit": "Month",
+            "Value": {
+              "Value": {
+                "string": "￼",
+                "attachmentsByRange": {
+                  "{0, 1}": {
+                    "OutputUUID": "2FA30A09-6096-40A5-9084-07F03F458B5E",
+                    "Type": "ActionOutput",
+                    "OutputName": "Provided Input"
+                  }
+                }
+              },
+              "WFSerializationType": "WFTextTokenString"
+            },
+            "Operation": "Add"
+          },
+          "WFSerializationType": "WFTimeOffsetValue"
+        },
+        "UUID": "4B438AAB-9F1D-490F-97B2-BE1C166C54E0",
+        "WFAdjustOperation": "Add",
+        "WFDate": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "VariableName": "包装日期",
+                "Type": "Variable"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "4B438AAB-9F1D-490F-97B2-BE1C166C54E0",
+            "Type": "ActionOutput",
+            "OutputName": "Adjusted Date"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "初算到期日",
+        "UUID": "5B362D33-A631-415E-A8AA-12FC0600382B"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefrommenu",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 1,
+        "UUID": "13DB26FD-D081-4BC3-A1E0-98BFBC6CC316",
+        "GroupingIdentifier": "A73B4BC6-AE55-4EC6-A9F3-F767D366DCE0",
+        "WFMenuItemTitle": "生产日期＋保质期天数"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.ask",
+      "WFWorkflowActionParameters": {
+        "WFAskActionDefaultAnswerNumber": 30,
+        "WFAskActionAllowsNegativeNumbers": false,
+        "UUID": "7EF919F2-524A-4BAC-9B59-585B1B52B918",
+        "WFInputType": "Number",
+        "WFAskActionAllowsDecimalNumbers": false,
+        "WFAskActionPrompt": "包装标注的保质期是多少天？"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.adjustdate",
+      "WFWorkflowActionParameters": {
+        "WFDuration": {
+          "Value": {
+            "Unit": "days",
+            "Magnitude": {
+              "Value": {
+                "string": "￼",
+                "attachmentsByRange": {
+                  "{0, 1}": {
+                    "OutputUUID": "7EF919F2-524A-4BAC-9B59-585B1B52B918",
+                    "Type": "ActionOutput",
+                    "OutputName": "Provided Input"
+                  }
+                }
+              },
+              "WFSerializationType": "WFTextTokenString"
+            }
+          },
+          "WFSerializationType": "WFQuantityFieldValue"
+        },
+        "WFAdjustOffsetPicker": {
+          "Value": {
+            "Unit": "Day",
+            "Value": {
+              "Value": {
+                "string": "￼",
+                "attachmentsByRange": {
+                  "{0, 1}": {
+                    "OutputUUID": "7EF919F2-524A-4BAC-9B59-585B1B52B918",
+                    "Type": "ActionOutput",
+                    "OutputName": "Provided Input"
+                  }
+                }
+              },
+              "WFSerializationType": "WFTextTokenString"
+            },
+            "Operation": "Add"
+          },
+          "WFSerializationType": "WFTimeOffsetValue"
+        },
+        "UUID": "E9EA7A51-C01C-4DEB-95B9-1F556C94297E",
+        "WFAdjustOperation": "Add",
+        "WFDate": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "VariableName": "包装日期",
+                "Type": "Variable"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "E9EA7A51-C01C-4DEB-95B9-1F556C94297E",
+            "Type": "ActionOutput",
+            "OutputName": "Adjusted Date"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "初算到期日",
+        "UUID": "2571E788-CD58-4654-B75A-AC00484360CE"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.choosefrommenu",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 2,
+        "GroupingIdentifier": "A73B4BC6-AE55-4EC6-A9F3-F767D366DCE0",
+        "UUID": "05EAE437-3282-4BE2-97E6-2A0C3509CAF9"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.ask",
+      "WFWorkflowActionParameters": {
+        "WFAskActionPrompt": "请按包装核对最终到期日；开封期限如更短，请修改",
+        "UUID": "D6CDA844-B85B-4A6F-8AE1-069656D6E9ED",
+        "WFInputType": "Date",
+        "WFAskActionDefaultAnswerDate": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "VariableName": "初算到期日",
+                "Type": "Variable"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.format.date",
+      "WFWorkflowActionParameters": {
+        "WFDateFormatStyle": "Custom",
+        "WFDateFormat": "yyyy-MM-dd",
+        "UUID": "B6AD1A1E-E7E5-4E15-9A00-C115E37A8AC1",
+        "WFDate": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "D6CDA844-B85B-4A6F-8AE1-069656D6E9ED",
+                "Type": "ActionOutput",
+                "OutputName": "Provided Input"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "B6AD1A1E-E7E5-4E15-9A00-C115E37A8AC1",
+            "Type": "ActionOutput",
+            "OutputName": "Formatted Date"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "到期日文字",
+        "UUID": "7B6C50CD-1325-4414-A2F0-D757DEEF787F"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettext",
+      "WFWorkflowActionParameters": {
+        "WFTextActionText": {
+          "Value": {
+            "string": "￼ 09:00",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "B6AD1A1E-E7E5-4E15-9A00-C115E37A8AC1",
+                "Type": "ActionOutput",
+                "OutputName": "Formatted Date"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "UUID": "F2219266-40D9-471C-829C-5F8B8BE2BB47"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.detect.date",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "F2219266-40D9-471C-829C-5F8B8BE2BB47",
+            "Type": "ActionOutput",
+            "OutputName": "Text"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "UUID": "768AE72E-6A16-43F1-9B20-EC3173BFAD31"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.setvariable",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "OutputUUID": "768AE72E-6A16-43F1-9B20-EC3173BFAD31",
+            "Type": "ActionOutput",
+            "OutputName": "Dates"
+          },
+          "WFSerializationType": "WFTextTokenAttachment"
+        },
+        "WFVariableName": "最终到期日",
+        "UUID": "B9D077AD-CCA6-4AC8-8AF0-6FF436BE5EE0"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.date",
+      "WFWorkflowActionParameters": {
+        "WFDateActionMode": "Current Date",
+        "UUID": "982940BB-CC1A-4FC5-850E-761C1FC9F21D"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettimebetweendates",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "768AE72E-6A16-43F1-9B20-EC3173BFAD31",
+                "Type": "ActionOutput",
+                "OutputName": "Dates"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "WFTimeUntilFromDate": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "982940BB-CC1A-4FC5-850E-761C1FC9F21D",
+                "Type": "ActionOutput",
+                "OutputName": "Date"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "UUID": "F458A78B-DDFB-494B-AFAC-D4CC5381D1D4",
+        "WFTimeUntilUnit": "Seconds"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "WFCondition": 2,
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "Value": {
+              "OutputUUID": "F458A78B-DDFB-494B-AFAC-D4CC5381D1D4",
+              "Type": "ActionOutput",
+              "OutputName": "Time Between Dates"
+            },
+            "WFSerializationType": "WFTextTokenAttachment"
+          }
+        },
+        "WFControlFlowMode": 0,
+        "UUID": "AA4220DF-B905-4177-8BD2-A2D4937184CB",
+        "GroupingIdentifier": "1409142A-A612-4A38-899B-0357A1D26624",
+        "WFNumberValue": "0"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "WFControlFlowMode": 1,
+        "GroupingIdentifier": "1409142A-A612-4A38-899B-0357A1D26624",
+        "UUID": "1DEEC25C-AE5D-42E1-8D3E-A05E82ABC8A4"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.alert",
+      "WFWorkflowActionParameters": {
+        "WFAlertActionCancelButtonShown": false,
+        "WFAlertActionTitle": "商品已到期或今日提醒时间已过",
+        "WFAlertActionMessage": "请检查包装日期，本次未创建提醒。",
+        "UUID": "31B34E3A-CE83-448F-817F-66D6D018A93A"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.exit",
+      "WFWorkflowActionParameters": {
+        "UUID": "CDC9BC68-36DB-4ECD-8650-3070A48CAB0D"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "UUID": "805922E4-47AF-45E1-AD53-446AD4F9380A",
+        "GroupingIdentifier": "1409142A-A612-4A38-899B-0357A1D26624",
+        "WFControlFlowMode": 2
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.alert",
+      "WFWorkflowActionParameters": {
+        "WFAlertActionCancelButtonShown": true,
+        "WFAlertActionTitle": "确认添加保质期提醒",
+        "WFAlertActionMessage": {
+          "Value": {
+            "string": "商品：￼\n到期：￼\n将添加到期当天上午9点提醒；距离到期超过30天时，再添加提前30天提醒。",
+            "attachmentsByRange": {
+              "{8, 1}": {
+                "OutputUUID": "B6AD1A1E-E7E5-4E15-9A00-C115E37A8AC1",
+                "Type": "ActionOutput",
+                "OutputName": "Formatted Date"
+              },
+              "{3, 1}": {
+                "OutputUUID": "D96E8D05-4DE0-4663-9B6D-1AFDB8F57CB4",
+                "Type": "ActionOutput",
+                "OutputName": "Provided Input"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "UUID": "B3394E3C-1255-4C50-BC62-9D8DCF363DA5"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.adjustdate",
+      "WFWorkflowActionParameters": {
+        "WFDuration": {
+          "Value": {
+            "Unit": "days",
+            "Magnitude": "30"
+          },
+          "WFSerializationType": "WFQuantityFieldValue"
+        },
+        "WFAdjustOffsetPicker": {
+          "Value": {
+            "Unit": "Day",
+            "Value": "30",
+            "Operation": "Subtract"
+          },
+          "WFSerializationType": "WFTimeOffsetValue"
+        },
+        "UUID": "B5749E29-95AE-4B8C-8D9E-79FE979F652E",
+        "WFAdjustOperation": "Subtract",
+        "WFDate": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "768AE72E-6A16-43F1-9B20-EC3173BFAD31",
+                "Type": "ActionOutput",
+                "OutputName": "Dates"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.gettimebetweendates",
+      "WFWorkflowActionParameters": {
+        "WFInput": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "B5749E29-95AE-4B8C-8D9E-79FE979F652E",
+                "Type": "ActionOutput",
+                "OutputName": "Adjusted Date"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "WFTimeUntilFromDate": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "982940BB-CC1A-4FC5-850E-761C1FC9F21D",
+                "Type": "ActionOutput",
+                "OutputName": "Date"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "UUID": "43756B47-66BB-4091-A0A7-ABCA664F7BF5",
+        "WFTimeUntilUnit": "Seconds"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "GroupingIdentifier": "620904D9-0BD3-43AC-AC4C-578D3C312F00",
+        "WFInput": {
+          "Type": "Variable",
+          "Variable": {
+            "Value": {
+              "OutputUUID": "43756B47-66BB-4091-A0A7-ABCA664F7BF5",
+              "Type": "ActionOutput",
+              "OutputName": "Time Between Dates"
+            },
+            "WFSerializationType": "WFTextTokenAttachment"
+          }
+        },
+        "WFControlFlowMode": 0,
+        "UUID": "7188C752-F77D-41F3-B0F9-736639746041",
+        "WFNumberValue": "0",
+        "WFCondition": 2
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.addnewreminder",
+      "WFWorkflowActionParameters": {
+        "WFAlertCondition": "At Time",
+        "WFCalendarItemTitle": {
+          "Value": {
+            "string": "【临期】￼",
+            "attachmentsByRange": {
+              "{4, 1}": {
+                "VariableName": "商品名称",
+                "Type": "Variable"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "WFCalendarItemNotes": {
+          "Value": {
+            "string": "到期日：￼\n条码：￼\n包装识别文字：\n￼",
+            "attachmentsByRange": {
+              "{19, 1}": {
+                "VariableName": "包装文字",
+                "Type": "Variable"
+              },
+              "{4, 1}": {
+                "VariableName": "到期日文字",
+                "Type": "Variable"
+              },
+              "{9, 1}": {
+                "VariableName": "商品条码",
+                "Type": "Variable"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "UUID": "EFF2A264-25A6-4EE4-8D2F-B68319F750D3",
+        "WFAlertCustomTime": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "B5749E29-95AE-4B8C-8D9E-79FE979F652E",
+                "Type": "ActionOutput",
+                "OutputName": "Adjusted Date"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "WFAlertEnabled": "Alert"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.conditional",
+      "WFWorkflowActionParameters": {
+        "UUID": "22293CE4-507C-46C8-9719-B02D92CD72F9",
+        "GroupingIdentifier": "620904D9-0BD3-43AC-AC4C-578D3C312F00",
+        "WFControlFlowMode": 2
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.addnewreminder",
+      "WFWorkflowActionParameters": {
+        "WFAlertCondition": "At Time",
+        "WFCalendarItemTitle": {
+          "Value": {
+            "string": "【到期】￼",
+            "attachmentsByRange": {
+              "{4, 1}": {
+                "VariableName": "商品名称",
+                "Type": "Variable"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "WFCalendarItemNotes": {
+          "Value": {
+            "string": "到期日：￼\n条码：￼\n包装识别文字：\n￼",
+            "attachmentsByRange": {
+              "{19, 1}": {
+                "VariableName": "包装文字",
+                "Type": "Variable"
+              },
+              "{4, 1}": {
+                "VariableName": "到期日文字",
+                "Type": "Variable"
+              },
+              "{9, 1}": {
+                "VariableName": "商品条码",
+                "Type": "Variable"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "UUID": "000CAF26-FDB4-42EB-BDA8-53730346E56F",
+        "WFAlertCustomTime": {
+          "Value": {
+            "string": "￼",
+            "attachmentsByRange": {
+              "{0, 1}": {
+                "OutputUUID": "768AE72E-6A16-43F1-9B20-EC3173BFAD31",
+                "Type": "ActionOutput",
+                "OutputName": "Dates"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        },
+        "WFAlertEnabled": "Alert"
+      }
+    },
+    {
+      "WFWorkflowActionIdentifier": "is.workflow.actions.showresult",
+      "WFWorkflowActionParameters": {
+        "UUID": "9FF24E77-A170-47EA-B82C-3407165789E5",
+        "Text": {
+          "Value": {
+            "string": "已添加：￼\n到期日：￼\n请在提醒事项中确认通知时间。",
+            "attachmentsByRange": {
+              "{10, 1}": {
+                "OutputUUID": "B6AD1A1E-E7E5-4E15-9A00-C115E37A8AC1",
+                "Type": "ActionOutput",
+                "OutputName": "Formatted Date"
+              },
+              "{4, 1}": {
+                "OutputUUID": "D96E8D05-4DE0-4663-9B6D-1AFDB8F57CB4",
+                "Type": "ActionOutput",
+                "OutputName": "Provided Input"
+              }
+            }
+          },
+          "WFSerializationType": "WFTextTokenString"
+        }
+      }
+    }
+  ],
+  "WFWorkflowInputContentItemClasses": [],
+  "WFWorkflowImportQuestions": [],
+  "WFQuickActionSurfaces": [],
+  "WFWorkflowTypes": [
+    "WFWorkflowTypeShowInSearch"
+  ],
+  "WFWorkflowHasShortcutInputVariables": false
+}
